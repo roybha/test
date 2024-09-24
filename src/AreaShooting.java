@@ -20,11 +20,11 @@ public class AreaShooting {
                 System.out.print(i+1);
             for(int j =0;j<map[1].length;j++)
             {   
-                  if(map[i][j]==false)
+                  if(!map[i][j])
                   System.out.print(" | -");
-                  else if(map[i][j]==true && i!=targetRow && j!=targetColumn)
+                  else if(map[i][j] && (i!=targetRow || j!=targetColumn))
                   System.out.print(" | *");
-                  else if(map[i][j]==true && i==targetRow && j==targetColumn)
+                  else if(map[i][j] && i==targetRow && j==targetColumn)
                   System.out.print(" | X");
             }
             System.out.println(" |");
@@ -34,11 +34,11 @@ public class AreaShooting {
     {   
         boolean[][] map = new boolean[5][5];//матриця,що демонструє куди влучив гравець
         boolean flag = false;// булева змінна,що демонструє статус "ураження" цілі
-        int targetRow = rand.nextInt(5);//"вигадуємо" рядок на якому буде знаходитись ціль
-        int targetColumn = rand.nextInt(5);//"вигадуємо" стовбець на якому буде знаходитись ціль
+        int targetRow = rand.nextInt(0,5);//"вигадуємо" рядок на якому буде знаходитись ціль
+        int targetColumn = rand.nextInt(0,5);//"вигадуємо" стовбець на якому буде знаходитись ціль
         System.out.println("All Set. Get ready to rumble!");
         ShowField(map,targetRow,targetColumn);//друкуємо поле гри
-        while(flag==false)
+        while(!flag)
         {  
            int[] resultOfInputting = InputtingCoordinates(scanner);//викликаємо мето,де вводимо координати,куди хоче "стріляти" гравець
            int chosenRow=resultOfInputting[0],chosenColumn=resultOfInputting[1];//присвоюємо введені значення змінним,що відображають обрані рядок/стовбець(координати)
@@ -47,30 +47,27 @@ public class AreaShooting {
            targetRow++;
            targetColumn++;
            //коригуємо коориднати цілі і обраної мітки так,щоб не виникло помилки,а також задля коректного відображення даних на мапі
-           if(CheckingCoordinatesByBoundary(chosenRow, chosenColumn))//викликаємо метод,що перевіряє введені координати  щодо розмірності поля гри
-           continue;
-           else
+           if(!CheckingCoordinatesByBoundary(chosenRow, chosenColumn))//викликаємо метод,що перевіряє введені координати  щодо розмірності поля гри
            {
             //якщо перевірку пройдено,то
-            if(targetRow==chosenRow && targetColumn==chosenColumn)//звіряємо введені дані із ціллю
-            {
+               if(targetRow==chosenRow && targetColumn==chosenColumn)//звіряємо введені дані із ціллю
+               {
              //якщо влучаємо,то виводимо відповідне повідомлення і закінчужмо гру
-             System.out.println("You have won!");
-             map[--chosenRow][--chosenColumn] = true;
-             flag = true;
-            }
-            else 
-            {
-             //якщо не влучаємо,то виводимо відповідне повідомлення і продовжуємо гру
-             System.out.println("You have missed.Try again.");
-             map[--chosenRow][--chosenColumn] = true;
-            }
+                System.out.println("You have won!");
+                map[--chosenRow][--chosenColumn] = true;
+                flag = true;
+               }
+               else
+               {
+                //якщо не влучаємо,то виводимо відповідне повідомлення і продовжуємо гру
+                System.out.println("You have missed.Try again.");
+                map[--chosenRow][--chosenColumn] = true;
+                }
+           }
             targetRow--;
             targetColumn--;
             //коригуємо коориднати цілі
             ShowField(map,targetRow,targetColumn);//друкуємо поле гри
-           }
-           
         }
     }
     public static boolean CheckingCoordinatesByBoundary(int row,int column)//метод,що перевіряє введені коориданти щодо розмірності поля гри
