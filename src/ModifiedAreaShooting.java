@@ -71,14 +71,17 @@ public class ModifiedAreaShooting
              System.out.println("You have missed.Try again.");
              map[--chosenRow][--chosenColumn] = true;
             }
-            target[0][0]--;target[0][1]--;target[0][2]--;
-            target[1][0]--;target[1][1]--;target[1][2]--;
+            target[0][0]--;
+            target[0][1]--;
+            target[0][2]--;
+            target[1][0]--;
+            target[1][1]--;
+            target[1][2]--;
             //коригуємо коориднати частин цілі
             ShowField(map,target);
            }
-          
         }
-        System.out.println("You have won!");//по завершенню циклу,друкуємо повідомлення,що гравець виграв
+        System.out.println("You have won the game!");//по завершенню циклу,друкуємо повідомлення,що гравець виграв
     }
     public static boolean CheckingCoordinatesByBoundary(int row,int column)//метод,що перевіряє введені коориданти щодо розмірності поля гри
     { 
